@@ -76,7 +76,11 @@ class XHProfRuns_Default implements iXHProfRuns {
 
   private function file_name($run_id, $type) {
 
-    $file = "$run_id.$type." . $this->suffix;
+  	if(empty($type)) {
+		$file = "$run_id." . $this->suffix;
+  	} else {
+    	$file = "$run_id.$type." . $this->suffix;
+  	}
 
     if (!empty($this->dir)) {
       $file = $this->dir . "/" . $file;
@@ -150,14 +154,27 @@ class XHProfRuns_Default implements iXHProfRuns {
     if (is_dir($this->dir)) {
         echo "<hr/>Existing runs:\n<ul>\n";
         foreach (glob("{$this->dir}/*.{$this->suffix}") as $file) {
-            list($run,$source) = explode('.', basename($file));
-            echo '<li><a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
+            $run = explode('.', basename($file));
+            array_pop($run);
+            $run = join('.', $run);
+            $source = '';
+            echo '<li><input type="checkbox" id="'.htmlentities($run).'" onclick="clickCheckBox(this);"> <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
                 . '?run=' . htmlentities($run) . '&source='
                 . htmlentities($source) . '">'
                 . htmlentities(basename($file)) . "</a><small> "
                 . date("Y-m-d H:i:s", filemtime($file)) . "</small></li>\n";
         }
         echo "</ul>\n";
+        echo '<div id="compare0"></div><div id="compare1"></div>';
+        $script = htmlentities($_SERVER['SCRIPT_NAME']);
+        echo <<<FORM
+        <form action="$script" method="GET" id="compare_form">
+        <input type="submit" value="Compare" id="compare_button">
+        <input type="hidden" value="" name="run1" id="run1">
+        <input type="hidden" value="" name="run2" id="run2">
+        <input type="hidden" value="" name="source">
+        </form>
+FORM;
     }
   }
 }

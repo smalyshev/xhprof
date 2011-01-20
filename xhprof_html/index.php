@@ -44,8 +44,8 @@ $params = array('run'        => array(XHPROF_STRING_PARAM, ''),
                 'sort'       => array(XHPROF_STRING_PARAM, 'wt'), // wall time
                 'run1'       => array(XHPROF_STRING_PARAM, ''),
                 'run2'       => array(XHPROF_STRING_PARAM, ''),
-                'source'     => array(XHPROF_STRING_PARAM, 'xhprof'),
-                'all'        => array(XHPROF_UINT_PARAM, 0),
+                'source'     => array(XHPROF_STRING_PARAM, ''),
+				'all'        => array(XHPROF_UINT_PARAM, 0),
                 );
 
 // pull values of these params, and create named globals for each param

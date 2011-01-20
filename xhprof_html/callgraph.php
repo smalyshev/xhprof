@@ -41,7 +41,7 @@ $params = array(// run id param
                 'run' => array(XHPROF_STRING_PARAM, ''),
 
                 // source/namespace/type of run
-                'source' => array(XHPROF_STRING_PARAM, 'xhprof'),
+                'source' => array(XHPROF_STRING_PARAM, ''),
 
                 // the focus function, if it is set, only directly
                 // parents/children functions of it will be shown.

@@ -507,6 +507,7 @@ function profiler_report ($url_params,
 
   // set up the action links for operations that can be done on this report
   $links = array();
+  $links [] =  xhprof_render_link("Reports list", $base_path."/index.php");
   $links [] =  xhprof_render_link("View Top Level $diff_text Report",
                                  $top_link_query_string);
 
@@ -1416,7 +1417,6 @@ function displayXHProfReport($xhprof_runs_impl, $url_params, $source,
                                $run);
 
   } else if ($run1 && $run2) {                  // diff report for two runs
-
     $xhprof_data1 = $xhprof_runs_impl->get_run($run1, $source, $description1);
     $xhprof_data2 = $xhprof_runs_impl->get_run($run2, $source, $description2);
 

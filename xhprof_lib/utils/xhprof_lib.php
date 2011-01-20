@@ -20,6 +20,7 @@
 //
 
 function xhprof_error($message) {
+	trigger_error($message, E_USER_WARNING);
   error_log($message);
 }
 

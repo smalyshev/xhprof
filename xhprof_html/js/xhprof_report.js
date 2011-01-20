@@ -178,6 +178,45 @@ function ChildRowToolTip(cell, metric)
   return s;
 }
 
+compare_run = ['', ''];
+
+function checkCompare(id, no)
+{
+	$('#compare'+no).html('Comparing <b>'+id+"</b>");
+}
+
+function clearCompare(no)
+{
+	$('#compare'+no).html('');
+	compare_run[no] = '';
+}
+
+function clickCheckBox(box)
+{
+	if(box.checked) {
+		if(compare_run[0] == '') {
+			compare_run[0] = box.id;
+			checkCompare(box.id, 0);
+		} else if(compare_run[1] == '') {
+			compare_run[1] = box.id;
+			checkCompare(box.id, 1);
+		} else {
+			box.checked = false;
+		}
+	} else {
+		if(box.id == compare_run[0]) {
+			clearCompare(0);
+		} else if(box.id == compare_run[1]) {
+			clearCompare(1);
+		}
+	}
+	if(compare_run[0] != '' && compare_run[1] != '') {
+		$('#compare_button').show();
+	} else {
+		$('#compare_button').hide();
+	}
+}
+
 $(document).ready(function() {
   $('td[@metric]').tooltip(
     { bodyHandler: function() {
@@ -201,4 +240,12 @@ $(document).ready(function() {
       cur_params['symbol'] = item;
       location.search = '?' + jQuery.param(cur_params);
     });
+  $('#compare_button').hide();
+  $('#compare_button').click(function() {
+	  if(compare_run[0] != '' && compare_run[1] != '') {
+		  $('#run1').val(compare_run[0]); 
+		  $('#run2').val(compare_run[1]); 
+		  $('#compare_form').submit();
+	  }
+  });
 });
