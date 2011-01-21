@@ -175,7 +175,7 @@ FORM;
         	echo "<li>$source\n<ul>";
         	ksort($runs);
         	foreach($runs as $time => $run) {
-            	echo '<li><input type="checkbox" id="'.htmlentities($run["id"].$source).'" onclick="clickCheckBox(this);">'
+            	echo '<li><input type="checkbox" id="'.htmlentities("{$run["id"]}.$source").'" onclick="clickCheckBox(this);">'
             	. "<small>$time</small>"
             	. ': <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
                 . '?run=' . htmlentities($run["id"]) . '&source='
