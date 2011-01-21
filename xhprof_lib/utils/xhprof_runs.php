@@ -166,14 +166,23 @@ FORM;
         foreach (glob("{$this->dir}/*.{$this->suffix}") as $file) {
             $runelems = explode('.', basename($file));
             array_pop($runelems);
-            $runid = join('.', $runelems);
             $run = array_shift($runelems);
             $source = join('.', $runelems);
-            echo '<li><input type="checkbox" id="'.htmlentities($runid).'" onclick="clickCheckBox(this);"> <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
-                . '?run=' . htmlentities($run) . '&source='
+            $source_runs[$source][date("Y-m-d H:i:s", filemtime($file))] = array("id" => $run, "file" => $file);
+        }
+        ksort($source_runs);
+        foreach($source_runs as $source => $runs) {
+        	echo "<li>$source\n<ul>";
+        	ksort($runs);
+        	foreach($runs as $time => $run) {
+            	echo '<li><input type="checkbox" id="'.htmlentities($run["id"].$source).'" onclick="clickCheckBox(this);">'
+            	. "<small>$time</small>"
+            	. ': <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
+                . '?run=' . htmlentities($run["id"]) . '&source='
                 . htmlentities($source) . '">'
-                . htmlentities(basename($file)) . "</a><small> "
-                . date("Y-m-d H:i:s", filemtime($file)) . "</small></li>\n";
+                . htmlentities(basename($run["file"])) . "</a></li>\n";
+        	}
+        	echo "</ul>\n";
         }
         echo "</ul>\n";
     }

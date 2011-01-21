@@ -248,4 +248,5 @@ $(document).ready(function() {
 		  $('#compare_form').submit();
 	  }
   });
+  $('input:checkbox').each(function(index) { this.checked = 0; });
 });
