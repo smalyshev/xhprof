@@ -152,19 +152,6 @@ class XHProfRuns_Default implements iXHProfRuns {
 
   function list_runs() {
     if (is_dir($this->dir)) {
-        echo "<hr/>Existing runs:\n<ul>\n";
-        foreach (glob("{$this->dir}/*.{$this->suffix}") as $file) {
-            $run = explode('.', basename($file));
-            array_pop($run);
-            $run = join('.', $run);
-            $source = '';
-            echo '<li><input type="checkbox" id="'.htmlentities($run).'" onclick="clickCheckBox(this);"> <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
-                . '?run=' . htmlentities($run) . '&source='
-                . htmlentities($source) . '">'
-                . htmlentities(basename($file)) . "</a><small> "
-                . date("Y-m-d H:i:s", filemtime($file)) . "</small></li>\n";
-        }
-        echo "</ul>\n";
         echo '<div id="compare0"></div><div id="compare1"></div>';
         $script = htmlentities($_SERVER['SCRIPT_NAME']);
         echo <<<FORM
@@ -175,6 +162,20 @@ class XHProfRuns_Default implements iXHProfRuns {
         <input type="hidden" value="" name="source">
         </form>
 FORM;
+        echo "<hr/>Existing runs:\n<ul>\n";
+        foreach (glob("{$this->dir}/*.{$this->suffix}") as $file) {
+            $runelems = explode('.', basename($file));
+            array_pop($runelems);
+            $runid = join('.', $runelems);
+            $run = array_shift($runelems);
+            $source = join('.', $runelems);
+            echo '<li><input type="checkbox" id="'.htmlentities($runid).'" onclick="clickCheckBox(this);"> <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
+                . '?run=' . htmlentities($run) . '&source='
+                . htmlentities($source) . '">'
+                . htmlentities(basename($file)) . "</a><small> "
+                . date("Y-m-d H:i:s", filemtime($file)) . "</small></li>\n";
+        }
+        echo "</ul>\n";
     }
   }
 }
