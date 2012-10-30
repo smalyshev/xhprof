@@ -18,5 +18,5 @@ if(!file_exists($f)) {
 
 header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename=".basename($_REQUEST['f']));
-fpassthru($f);
+readfile($f);
 
