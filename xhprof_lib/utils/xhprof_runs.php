@@ -155,6 +155,7 @@ class XHProfRuns_Default implements iXHProfRuns {
         echo '<div id="compare0"></div><div id="compare1"></div>';
         $script = htmlentities($_SERVER['SCRIPT_NAME']);
         echo <<<FORM
+	<link href="//netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css" rel="stylesheet">
         <form action="$script" method="GET" id="compare_form">
         <input type="submit" value="Compare" id="compare_button">
         <input type="hidden" value="" name="run1" id="run1">
@@ -180,7 +181,10 @@ FORM;
             	. ': <a href="' . htmlentities($_SERVER['SCRIPT_NAME'])
                 . '?run=' . htmlentities($run["id"]) . '&source='
                 . htmlentities($source) . '">'
-                . htmlentities(basename($run["file"])) . "</a></li>\n";
+                . htmlentities(basename($run["file"])) 
+		. "</a> "
+		. "<a href=\"dl.php?f=".htmlentities(basename($run["file"]))."\" style=\"text-decoration:none\"><i class=\"icon icon-download-alt\"></i></a>"
+		."</li>\n";
         	}
         	echo "</ul>\n";
         }
